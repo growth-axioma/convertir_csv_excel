@@ -34,6 +34,7 @@ if uploaded_file:
 st.markdown("---")
 
 
+# 🟢 Módulo Excel a CSV
 st.title("Conversor de Excel a CSV 📊➡️📄")
 uploaded_excel = st.file_uploader("Sube tu archivo Excel", type=["xlsx", "xls"], key="excel")
 
@@ -42,8 +43,8 @@ if uploaded_excel:
         df_excel = pd.read_excel(uploaded_excel, engine='openpyxl')
         st.success("Excel leído correctamente")
 
-        output_csv = io.StringIO()
-        df_excel.to_csv(output_csv, index=False)
+        output_csv = io.BytesIO()
+        output_csv.write(df_excel.to_csv(index=False).encode("utf-8"))
         output_csv.seek(0)
 
         st.download_button(
